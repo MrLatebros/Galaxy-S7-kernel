@@ -66,7 +66,6 @@
 
    # CPU HOTPLUG
    write /sys/power/cpuhotplug/enabled 1
-   write /sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster1_all_cores_max_freq 0
 
    # HMP
    chmod 0664 /sys/kernel/hmp/up_threshold
