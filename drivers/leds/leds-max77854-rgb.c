@@ -108,9 +108,9 @@ static u8 led_lowpower_mode = 0x0;
 static unsigned int octa_color = 0x0;
 
 /* added LED fade */
-unsigned int led_enable_fade = 0;
-unsigned int led_fade_time_up = 800;
-unsigned int led_fade_time_down = 800;
+unsigned int led_enable_fade = 1;
+unsigned int led_fade_time_up = 4000;
+unsigned int led_fade_time_down = 4000;
 unsigned int led_always_disable = 0;
 unsigned int led_debug_enable = 0;
 int led_block_leds_time_start = -1;
@@ -164,11 +164,11 @@ static struct leds_control {
 	u16 	noti_delay_off;
 } leds_control = {
 	.current_low = 5,
-	.current_high = 40,
-	.noti_ramp_control = 0,
-	.noti_ramp_up = 500,
-	.noti_ramp_down = 650,
-	.noti_delay_on = 500,
+	.current_high = 20,
+	.noti_ramp_control = 1,
+	.noti_ramp_up = 3000,
+	.noti_ramp_down = 3000,
+	.noti_delay_on = 3000,
 	.noti_delay_off = 5000,
 };
 #endif
@@ -782,14 +782,14 @@ static ssize_t store_max77854_rgb_pattern(struct device *dev,
 	switch (mode) {
 
 	case CHARGING:
-// LED FADE		max77854_rgb_set_state(&max77854_rgb->led[RED], led_dynamic_current, LED_ALWAYS_ON);
-		if (leds_control.noti_ramp_control == 1) {
-			max77854_rgb_ramp(dev, leds_control.noti_ramp_up, leds_control.noti_ramp_down);
-			max77854_rgb_blink(dev, 500, 500);
-			max77854_rgb_set_state(&max77854_rgb->led[RED], led_dynamic_current, LED_BLINK);
-		} else {
-			max77854_rgb_set_state(&max77854_rgb->led[RED], led_dynamic_current, LED_ALWAYS_ON);
-		}
+		max77854_rgb_set_state(&max77854_rgb->led[RED], led_dynamic_current, LED_ALWAYS_ON);
+//		if (leds_control.noti_ramp_control == 1) {
+//			max77854_rgb_ramp(dev, leds_control.noti_ramp_up, leds_control.noti_ramp_down);
+//			max77854_rgb_blink(dev, 500, 500);
+//			max77854_rgb_set_state(&max77854_rgb->led[RED], led_dynamic_current, LED_BLINK);
+//		} else {
+//			max77854_rgb_set_state(&max77854_rgb->led[RED], led_dynamic_current, LED_ALWAYS_ON);
+//		}
 /* end */
 		break;
 	case CHARGING_ERR:
@@ -812,7 +812,7 @@ static ssize_t store_max77854_rgb_pattern(struct device *dev,
 				max77854_rgb_blink(dev, led_fade_time_up, 5000);
 			}
 		} else {
-			max77854_rgb_blink(dev, 500, 5000);
+			max77854_rgb_blink(dev, 3000, 5000);
 		}
 /* END LED FADE */
 
