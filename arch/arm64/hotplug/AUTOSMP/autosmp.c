@@ -71,11 +71,11 @@ static struct asmp_param_struct {
 	.max_cpus_lc = 4, /* Max cpu Little cluster ! */
 	.min_cpus_bc = 1, /* Minimum Big cluster online */
 	.min_cpus_lc = 1, /* Minimum Little cluster online */
-	.cpufreq_up_bc = 95,
-	.cpufreq_up_lc = 80,
-	.cpufreq_down_bc = 80,
-	.cpufreq_down_lc = 65,
-	.cycle_up = 1,
+	.cpufreq_up_bc = 85,
+	.cpufreq_up_lc = 70,
+	.cpufreq_down_bc = 65,
+	.cpufreq_down_lc = 50,
+	.cycle_up = 0,
 	.cycle_down = 1,
 };
 
