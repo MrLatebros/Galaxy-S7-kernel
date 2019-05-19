@@ -676,7 +676,7 @@ static int lf_init(struct lf_gdbs_data *dbs_data)
 	 * you want at least 8 jiffies between sample intervals for the
 	 * CPU usage stats to be reasonable
 	 */
-	dbs_data->min_sampling_rate = jiffies_to_usecs(8);
+	dbs_data->min_sampling_rate = 5000;
 
 	mutex_init(&dbs_data->mutex);
 	return 0;
@@ -753,7 +753,7 @@ static int lf_cpufreq_governor_dbs(struct cpufreq_policy *policy,
 		 * at half the fastest acceptable rate.
 		 */
 		dbs_data->min_sampling_rate = max(dbs_data->min_sampling_rate,
-				LATENCY_MULTIPLIER * latency);
+				MIN_LATENCY_MULTIPLIER * latency);
 		dbs_data->tuners->sampling_rate = dbs_data->min_sampling_rate * 2;
 
 		if (!policy->governor->initialized) {
