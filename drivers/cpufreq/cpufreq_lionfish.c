@@ -18,16 +18,16 @@
 #define DEF_FREQUENCY_JUMP_THRESHOLD	(95)
 #define DEF_FREQUENCY_UP_THRESHOLD	(80)
 #define DEF_FREQUENCY_DOWN_THRESHOLD	(40)
-#define DEF_FREQUENCY_JUMP_LEVEL	(800000)
+#define DEF_FREQUENCY_JUMP_LEVEL	(1000000)
 #define DEF_SAMPLING_UP_FACTOR		(2)
-#define DEF_SAMPLING_DOWN_FACTOR	(3)
+#define DEF_SAMPLING_DOWN_FACTOR	(2)
 
 /* Lionfish governor fixed settings */
-#define RAMP_UP_PERCENTAGE		(130)
-#define RAMP_DOWN_PERCENTAGE		(65)
-#define FREQUENCY_STEP_PERCENTAGE	(5)
-#define JUMP_HISPEED_FREQ_PERCENTAGE	(83)
+#define STEP_MULTIPLIER			(4)
+#define MIN_FREQUENCY_STEP		(104000)
+#define JUMP_HISPEED_FREQ_PERCENTAGE	(82)
 #define MAX_SAMPLING_FACTOR		(10)
+#define MIN_HARDWARE_SAMPLING_RATE	(5000)
 
 #define LIONFISH_VERSION_MAJOR		(1)
 #define LIONFISH_VERSION_MINOR		(1)
@@ -149,12 +149,7 @@ static struct lf_dbs_data lf_dbs_cdata;
 static inline unsigned int get_freq_target(struct lf_dbs_tuners *lf_tuners,
 					   struct cpufreq_policy *policy)
 {
-	unsigned int freq_target =
-		(FREQUENCY_STEP_PERCENTAGE * policy->max) / 100;
-
-	/* max freq cannot be less than 100. But who knows... */
-	if (unlikely(freq_target == 0))
-		freq_target = FREQUENCY_STEP_PERCENTAGE;
+	unsigned int freq_target = MIN_FREQUENCY_STEP;
 
 	return freq_target;
 }
@@ -319,7 +314,7 @@ static void lf_check_cpu(struct lf_gdbs_data *dbs_data, int cpu)
 
 	/* update the frequency if enough votes to change */
 	if (dbs_info->up_ticks >= lf_tuners->sampling_up_factor) {
-		new_frequency = policy->cur * RAMP_UP_PERCENTAGE / 100;
+		new_frequency = policy->cur + (STEP_MULTIPLIER * MIN_FREQUENCY_STEP);
 		if (new_frequency < dbs_info->requested_freq + freq_shift)
 			new_frequency = dbs_info->requested_freq + freq_shift;
 		if (new_frequency > policy->max)
@@ -331,7 +326,7 @@ static void lf_check_cpu(struct lf_gdbs_data *dbs_data, int cpu)
 			CPUFREQ_RELATION_H);
 		dbs_info->up_ticks = dbs_info->down_ticks = 0;
 	} else if (dbs_info->down_ticks >= lf_tuners->sampling_down_factor) {
-		new_frequency = policy->cur * RAMP_DOWN_PERCENTAGE / 100;
+		new_frequency = policy->cur - (STEP_MULTIPLIER * MIN_FREQUENCY_STEP);
 		if (new_frequency > dbs_info->requested_freq - freq_shift)
 			new_frequency = dbs_info->requested_freq - freq_shift;
 		if (new_frequency < policy->min)
@@ -676,7 +671,7 @@ static int lf_init(struct lf_gdbs_data *dbs_data)
 	 * you want at least 8 jiffies between sample intervals for the
 	 * CPU usage stats to be reasonable
 	 */
-	dbs_data->min_sampling_rate = 5000;
+	dbs_data->min_sampling_rate = DEF_MIN_HARDWARE_SAMPLING_RATE;
 
 	mutex_init(&dbs_data->mutex);
 	return 0;
