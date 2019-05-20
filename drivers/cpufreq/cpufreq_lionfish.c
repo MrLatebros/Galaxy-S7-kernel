@@ -671,6 +671,7 @@ static int lf_init(struct lf_gdbs_data *dbs_data)
 	 * you want at least 8 jiffies between sample intervals for the
 	 * CPU usage stats to be reasonable
 	 */
+
 	dbs_data->min_sampling_rate = MIN_HARDWARE_SAMPLING_RATE;
 
 	mutex_init(&dbs_data->mutex);
