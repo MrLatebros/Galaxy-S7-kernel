@@ -224,6 +224,7 @@ MAIN()
 
 	echo "Your flasheable release can be found in the build folder"
 	echo ""
+	mv $RDIR/builds/$K_NAME-$MODEL-Oreo-$K_VERSION-$ZIP_DATE.zip ~/Sync
 }
 
 MAIN2()
@@ -263,10 +264,10 @@ echo "(2) S7 Edge SM-G935F/FD"
 echo "(3) S7 Edge + Flat F/FD"
 echo ""
 echo ""
-read -p "Select an option to compile the kernel " prompt
+#read -p "Select an option to compile the kernel " prompt
 
 
-if [ $prompt == "1" ]; then
+if [ true ]; then
     MODEL=G930
     DEVICE=$S7DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT

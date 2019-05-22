@@ -128,99 +128,52 @@ static void __ref AiO_HotPlug_work(struct work_struct *work)
 	        // Operations for big Cluster.
                 if (AiO.big_cores == 0)
 	        {
-	           if (cpu_online(3))
-	              aio_offline_cpus(3);
-	   	   if (cpu_online(2))
-	      	      aio_offline_cpus(2);
-	   	   if (cpu_online(1)) 
-              	      aio_offline_cpus(1);
-	   	   if (cpu_online(0))
-	      	      aio_offline_cpus(0);
+	           if (cpu_online(7))
+	              aio_offline_cpus(7);
+	   	   if (cpu_online(6))
+	      	      aio_offline_cpus(6);
+	   	   if (cpu_online(5)) 
+              	      aio_offline_cpus(5);
+	   	   if (cpu_online(4))
+	      	      aio_offline_cpus(4);
 	        }
 	        else if (AiO.big_cores == 1)
 	        {
-	                if (!cpu_online(0))
-	                   aio_online_cpus(0);
+	                if (!cpu_online(4))
+	                   aio_online_cpus(4);
 
-	                if (cpu_online(3))
-	          	   aio_offline_cpus(3);
-	      	        if (cpu_online(2))
-	           	   aio_offline_cpus(2);
-	        	if (cpu_online(1)) 
-                   	   aio_offline_cpus(1);
+	                if (cpu_online(7))
+	          	   aio_offline_cpus(7);
+	      	        if (cpu_online(6))
+	           	   aio_offline_cpus(6);
+	        	if (cpu_online(5)) 
+                   	   aio_offline_cpus(5);
 		}
 		else if (AiO.big_cores == 2)
 		{
-	        	if (!cpu_online(0))
-	           	   aio_online_cpus(0);
-	   		if (!cpu_online(1))
-	      	   	   aio_online_cpus(1);
-
-	   		if (cpu_online(3))
-	           	   aio_offline_cpus(3);
-	   		if (cpu_online(2))
-	           	   aio_offline_cpus(2);
-		}
-		else if (AiO.big_cores == 3)
-		{
-	   		if (!cpu_online(0))
-	           	   aio_online_cpus(0);
-	   		if (!cpu_online(1))
-	      	   	   aio_online_cpus(1);
-	   		if (!cpu_online(2))
-	      	   	   aio_online_cpus(2);
-
-	   		if (cpu_online(3))
-	      	   	   aio_offline_cpus(3);
-		}
-		else if (AiO.big_cores == 4)
-		{
-	   		if (!cpu_online(0))
-	      	   	   aio_online_cpus(0);
-	   		if (!cpu_online(1))
-	      	   	   aio_online_cpus(1);
-	   		if (!cpu_online(2))
-	      	   	   aio_online_cpus(2);
-	   		if (!cpu_online(3))
-	      	   	   aio_online_cpus(3);
-		}
-		// Operations for LITTLE Cluster.
-		if (AiO.LITTLE_cores == 0)
-		{
-	   	   if (cpu_online(7))
-	      	      aio_offline_cpus(7);
-	   	   if (cpu_online(6))
-	      	      aio_offline_cpus(6);
-	  	   if (cpu_online(5)) 
-             	      aio_offline_cpus(5);
-	   	   if (cpu_online(4))
-	      	      aio_offline_cpus(4);
-		}
-		else if (AiO.LITTLE_cores == 1)
-		{
-	   		if (!cpu_online(4))
-	      	   	   aio_online_cpus(4);
+	        	if (!cpu_online(4))
+	           	   aio_online_cpus(4);
+	   		if (!cpu_online(5))
+	      	   	   aio_online_cpus(5);
 
 	   		if (cpu_online(7))
-	      	   	   aio_offline_cpus(7);
+	           	   aio_offline_cpus(7);
 	   		if (cpu_online(6))
-	      	   	   aio_offline_cpus(6);
-	   		if (cpu_online(5)) 
-              	   	   aio_offline_cpus(5);
+	           	   aio_offline_cpus(6);
 		}
-		else if (AiO.LITTLE_cores == 2)
+		else if (AiO.big_cores == 3)
 		{
 	   		if (!cpu_online(4))
 	           	   aio_online_cpus(4);
 	   		if (!cpu_online(5))
-	           	   aio_online_cpus(5);
+	      	   	   aio_online_cpus(5);
+	   		if (!cpu_online(6))
+	      	   	   aio_online_cpus(6);
 
 	   		if (cpu_online(7))
 	      	   	   aio_offline_cpus(7);
-	   		if (cpu_online(6))
-	                   aio_offline_cpus(6);
 		}
-		else if (AiO.LITTLE_cores == 3)
+		else if (AiO.big_cores == 4)
 		{
 	   		if (!cpu_online(4))
 	      	   	   aio_online_cpus(4);
@@ -228,20 +181,67 @@ static void __ref AiO_HotPlug_work(struct work_struct *work)
 	      	   	   aio_online_cpus(5);
 	   		if (!cpu_online(6))
 	      	   	   aio_online_cpus(6);
+	   		if (!cpu_online(7))
+	      	   	   aio_online_cpus(7);
+		}
+		// Operations for LITTLE Cluster.
+		if (AiO.LITTLE_cores == 0)
+		{
+	   	   if (cpu_online(3))
+	      	      aio_offline_cpus(3);
+	   	   if (cpu_online(2))
+	      	      aio_offline_cpus(2);
+	  	   if (cpu_online(1)) 
+             	      aio_offline_cpus(1);
+	   	   if (cpu_online(0))
+	      	      aio_offline_cpus(0);
+		}
+		else if (AiO.LITTLE_cores == 1)
+		{
+	   		if (!cpu_online(0))
+	      	   	   aio_online_cpus(0);
 
-	   		if (cpu_online(7))
-	      	  	   aio_offline_cpus(7);
+	   		if (cpu_online(3))
+	      	   	   aio_offline_cpus(3);
+	   		if (cpu_online(2))
+	      	   	   aio_offline_cpus(2);
+	   		if (cpu_online(1)) 
+              	   	   aio_offline_cpus(1);
+		}
+		else if (AiO.LITTLE_cores == 2)
+		{
+	   		if (!cpu_online(0))
+	           	   aio_online_cpus(0);
+	   		if (!cpu_online(1))
+	           	   aio_online_cpus(1);
+
+	   		if (cpu_online(3))
+	      	   	   aio_offline_cpus(3);
+	   		if (cpu_online(2))
+	                   aio_offline_cpus(2);
+		}
+		else if (AiO.LITTLE_cores == 3)
+		{
+	   		if (!cpu_online(0))
+	      	   	   aio_online_cpus(0);
+	   		if (!cpu_online(1))
+	      	   	   aio_online_cpus(1);
+	   		if (!cpu_online(2))
+	      	   	   aio_online_cpus(2);
+
+	   		if (cpu_online(3))
+	      	  	   aio_offline_cpus(3);
 		}
 		else if (AiO.LITTLE_cores == 4)
 		{
-	  		if (!cpu_online(4))
-	           	   aio_online_cpus(4);
-	   		if (!cpu_online(5))
-	           	   aio_online_cpus(5);
-	   		if (!cpu_online(6))
-	           	   aio_online_cpus(6);
-	   		if (!cpu_online(7))
-	           	   aio_online_cpus(7);
+	  		if (!cpu_online(0))
+	           	   aio_online_cpus(0);
+	   		if (!cpu_online(1))
+	           	   aio_online_cpus(1);
+	   		if (!cpu_online(2))
+	           	   aio_online_cpus(2);
+	   		if (!cpu_online(3))
+	           	   aio_online_cpus(3);
                 }
           #endif
 
@@ -411,7 +411,7 @@ static ssize_t store_LITTLE_cores(struct kobject *kobj,
 
 	ret = sscanf(buf, "%u", &val);
 
-	if (ret != 1 || val < 0 || val > 4 || (val == 0 && AiO.big_cores == 0))
+	if (ret != 1 || val < 1 || val > 4 || (val == 0 && AiO.big_cores == 0))
 	   return -EINVAL;
 
 	AiO.LITTLE_cores = val;
